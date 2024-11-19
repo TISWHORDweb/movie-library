@@ -1,36 +1,203 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movie Explorer App
 
-## Getting Started
+A modern web application for exploring movies, managing favorites, and discovering new content built with Next.js 14, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## 🚀 Features
 
+- **Movie Discovery**: Browse and search through a vast collection of movies
+- **Detailed Movie Information**: View comprehensive details about movies including cast, ratings, and release dates
+- **Favorites System**: Save and manage your favorite movies with persistent storage
+- **Responsive Design**: Fully responsive layout that works on mobile, tablet, and desktop
+- **Server-Side Rendering**: Optimized performance with Next.js SSR capabilities
+- **Type Safety**: Full TypeScript implementation for robust development
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (v18.0.0 or higher)
+- npm (v8.0.0 or higher)
+- A TMDB API key (sign up at https://www.themoviedb.org/documentation/api)
+
+## 🛠️ Installation
+
+1. **Clone the repository**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/TISWHORDweb/movie-library.git
+cd movie-explorer-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies**
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Environment Setup**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the root directory with the following variables:
+```env
+NEXT_PUBLIC_TMDB_API_KEY=your_api_key_here
+NEXT_PUBLIC_TMDB_API_URL=https://api.themoviedb.org/3
+NEXT_PUBLIC_TMDB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
+```
 
-## Learn More
+## 🚀 Running the Application
 
-To learn more about Next.js, take a look at the following resources:
+**Development Mode**
+```bash
+npm run dev
+```
+The application will be available at `http://localhost:3000`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Production Build**
+```bash
+npm run build
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🏗️ Project Structure
 
-## Deploy on Vercel
+```
+movie-explorer-app/
+├── app/                    # Next.js 14 app directory
+│   ├── page.tsx           # Home page
+│   ├── layout.tsx         # Root layout
+│   └── [id]/              # Dynamic movie details routes
+├── components/            # Reusable components
+├── contexts/              # React contexts
+├── hooks/                # Custom React hooks
+├── types/                # TypeScript type definitions
+└── utils/                # Utility functions and API helpers
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 Architecture Decisions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Frontend Framework
+- **Next.js 14**: Chosen for its powerful SSR capabilities, file-based routing, and optimized performance
+- **TypeScript**: Ensures type safety and better developer experience
+- **Tailwind CSS**: Provides utility-first CSS for rapid UI development
+
+### State Management
+- **React Context**: Used for managing global state (favorites)
+- **Local Storage**: Persists user favorites across sessions
+- **Server State**: Managed through Next.js data fetching patterns
+
+### Component Architecture
+- **Client/Server Components**: Careful separation to optimize performance
+- **Atomic Design**: Components are organized following atomic design principles
+- **Hydration Safety**: Implementation of mounted checks and client-only renders where necessary
+
+### Data Fetching
+- **TMDB API**: External movie data source
+- **Typed API Responses**: Full type safety for API interactions
+- **Error Handling**: Comprehensive error boundaries and loading states
+
+## 🔑 Key Components
+
+### FavoritesContext
+```typescript
+// Manages global favorites state with hydration-safe implementation
+interface FavoritesContextType {
+  favorites: Movie[];
+  addToFavorites: (movie: Movie) => void;
+  removeFromFavorites: (movieId: number) => void;
+  isFavorite: (movieId: number) => boolean;
+}
+```
+
+### MovieDetails Component
+```typescript
+// Displays detailed movie information with client-side interactions
+interface MovieDetailsProps {
+  params: { id: string };
+}
+```
+
+## 🔒 Type Safety
+
+The project uses TypeScript throughout with comprehensive type definitions:
+
+```typescript
+// Example Movie Type
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  release_date: string;
+  overview: string;
+  vote_average: number;
+}
+
+// Extended MovieDetails Type
+interface MovieDetails extends Movie {
+  genres: Genre[];
+  cast: CastMember[];
+  runtime: number;
+}
+```
+
+## 🎨 Styling
+
+- **Tailwind CSS**: Utility-first CSS framework
+- **Custom Components**: Built on top of Tailwind with consistent styling
+- **Responsive Design**: Mobile-first approach with breakpoints
+- **Dark Mode**: Support for system-level dark mode preferences
+
+## 🔄 State Management Flow
+
+1. **Global State (Favorites)**
+   - Managed through React Context
+   - Persisted in localStorage
+   - Hydration-safe implementation
+
+2. **UI State**
+   - Local component state for UI interactions
+   - Loading states for data fetching
+   - Error boundaries for error handling
+
+3. **Server State**
+   - Movie data fetched from TMDB API
+   - Cached according to Next.js conventions
+   - Type-safe API responses
+
+## 📱 Responsive Design
+
+The application is fully responsive with breakpoints at:
+- Mobile: 0-640px
+- Tablet: 641-1024px
+- Desktop: 1025px+
+
+## 🔍 SEO Optimization
+
+- Proper meta tags for each page
+- Dynamic OpenGraph images
+- Semantic HTML structure
+- Next.js automatic optimization
+
+## 🧪 Testing
+
+To run tests:
+```bash
+npm test           # Run unit tests
+npm run e2e       # Run end-to-end tests
+```
+
+## 📈 Performance Considerations
+
+- Image optimization through Next.js Image component
+- Client-side state hydration strategies
+- Lazy loading of non-critical components
+- Proper caching strategies
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## 🙏 Acknowledgments
+
+- TMDB API for providing movie data
+- Next.js team for the amazing framework
+- All contributors who have helped improve the project
