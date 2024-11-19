@@ -22,7 +22,7 @@ export default function Home() {
     try {
       setLoading(true);
       const currentPage = reset ? 1 : page;
-      let data:any
+      let data:  { results: Movie[] };
       
       if (searchQuery) {
         data = await searchMovies(searchQuery, currentPage);
@@ -47,7 +47,7 @@ export default function Home() {
     if (inView && !loading) {
       loadMovies();
     }
-  }, [inView]);
+  }, [inView, loading]);
 
   return (
     <ErrorBoundary>

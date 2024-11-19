@@ -7,7 +7,7 @@ import { FavoritesProvider } from '@/contexts/FavoritesContext';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Movie Library',
+  title: 'MovieHive',
   description: 'Browse and manage your favorite movies',
 };
 
