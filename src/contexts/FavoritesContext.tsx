@@ -12,7 +12,6 @@ interface FavoritesContextType {
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
-// Create a client-only wrapper component
 function ClientOnlyProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
@@ -21,17 +20,15 @@ function ClientOnlyProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   if (!mounted) {
-    return null; // Return null on first render when on server
+    return null; 
   }
 
   return <>{children}</>;
 }
 
 export function FavoritesProvider({ children }: { children: React.ReactNode }) {
-  // Initialize with empty array to match server-side initial state
   const [favorites, setFavorites] = useState<Movie[]>([]);
 
-  // Load favorites only after component mounts on client
   useEffect(() => {
     try {
       const savedFavorites = localStorage.getItem('movieFavorites');

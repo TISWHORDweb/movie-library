@@ -14,23 +14,23 @@ export default function MovieDetailsPage() {
   const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites();
-  const params = useParams<{ id?: string }>(); // Specify type for params
+  const params = useParams<{ id?: string }>(); 
   const { id } = params;
   const movieId = typeof id === 'string' ? parseInt(id) : undefined;
 
   const loadMovie = useCallback(async () => {
-    if (!movieId) return; // If movieId is undefined or invalid, don't proceed
+    if (!movieId) return; 
     try {
       const data = await fetchMovieDetails(movieId || 0);
       setMovie(data);
     } finally {
       setLoading(false);
     }
-  }, [movieId]); // Only re-run when movieId changes
+  }, [movieId]); 
 
   useEffect(() => {
     loadMovie();
-  }, [movieId, loadMovie]); // Watch movieId and loadMovie
+  }, [movieId, loadMovie]);
 
   if (loading || !movie) {
     return (

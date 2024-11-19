@@ -30,7 +30,6 @@ export default function MovieDetailsClient({ initialMovie }: MovieDetailsClientP
   };
 
   const handleRate = (rating: number) => {
-    // You could implement an API call here to save the rating
     console.log(`Rated ${movie.title} ${rating} stars`);
   };
 
