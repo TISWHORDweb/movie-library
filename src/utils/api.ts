@@ -60,3 +60,4 @@ export const fetchMovieDetails = async (id: number) => {
     cast: creditsData.cast.slice(0, 10)
   };
 };
+
